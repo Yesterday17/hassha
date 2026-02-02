@@ -1,0 +1,43 @@
+# Example hassha configuration
+# Place this file at .hassha/config.toml in your project root
+
+# Play Shibuya's "Hana no Horokobi" melody when Claude finishes responding
+[hooks.Stop]
+melody = "JY-Shibuya"
+volume = 0.8
+
+# Play Keihin-Tohoku Line's Akihabara "Beyond the Line" melody on notifications
+[hooks.Notification]
+melody = "JK-Akihabara"
+volume = 1.0
+
+# Play Tokyo's "SH-3" melody when a session starts
+[hooks.SessionStart]
+melody = "JY-Tokyo"
+volume = 0.6
+
+# Play Narita Express Shinjuku's "Beautiful Hill" melody when a session ends
+[hooks.SessionEnd]
+melody = "NEX-Shinjuku"
+volume = 0.7
+
+# Play Takadanobaba's "Astro Boy" melody after Bash commands
+[hooks.PostToolUse]
+melody = "JY-Takadanobaba"
+matcher = "Bash"  # Only trigger for Bash tool
+volume = 0.5
+
+# Alternative: trigger for multiple tools
+# [hooks.PostToolUse]
+# melody = "JA-Osaki"  # Saikyo Line's "Twinkling Skyline"
+# matcher = "Bash|Write|Edit"  # Trigger for any of these tools
+
+# You can also use URLs
+# [hooks.Stop]
+# melody = "https://example.com/custom-sound.mp3"
+# volume = 1.0
+
+# Or local file paths
+# [hooks.Notification]
+# melody = "/path/to/your/sound.mp3"
+# volume = 0.8

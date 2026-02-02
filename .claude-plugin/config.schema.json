@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "hassha Configuration",
+  "description": "Configuration schema for the hassha Claude Code plugin",
+  "type": "object",
+  "properties": {
+    "hooks": {
+      "type": "object",
+      "description": "Hook event configurations",
+      "properties": {
+        "Stop": {
+          "$ref": "#/definitions/HookConfig",
+          "description": "Triggered when Claude finishes responding"
+        },
+        "Notification": {
+          "$ref": "#/definitions/HookConfig",
+          "description": "Triggered when Claude needs your attention"
+        },
+        "SessionStart": {
+          "$ref": "#/definitions/HookConfig",
+          "description": "Triggered when a Claude session begins"
+        },
+        "SessionEnd": {
+          "$ref": "#/definitions/HookConfig",
+          "description": "Triggered when a Claude session ends"
+        },
+        "PostToolUse": {
+          "$ref": "#/definitions/HookConfigWithMatcher",
+          "description": "Triggered after a tool executes successfully"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "definitions": {
+    "HookConfig": {
+      "type": "object",
+      "required": ["melody"],
+      "properties": {
+        "melody": {
+          "type": "string",
+          "description": "Melody ID (e.g., 'JY-Shibuya', 'JK-Akihabara'), URL, or local file path"
+        },
+        "volume": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 1.0,
+          "description": "Volume level (0.0 - 1.0)"
+        }
+      }
+    },
+    "HookConfigWithMatcher": {
+      "type": "object",
+      "required": ["melody"],
+      "properties": {
+        "melody": {
+          "type": "string",
+          "description": "Melody ID (e.g., 'JY-Shibuya', 'JK-Akihabara'), URL, or local file path"
+        },
+        "volume": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 1.0,
+          "description": "Volume level (0.0 - 1.0)"
+        },
+        "matcher": {
+          "type": "string",
+          "description": "Tool name pattern to match (e.g., 'Bash' or 'Bash|Write|Edit')"
+        }
+      }
+    },
+    "LineCode": {
+      "type": "string",
+      "enum": ["JY", "JK", "JB", "JA", "JU", "NEX"],
+      "description": "JR East line codes: JY=Yamanote, JK=Keihin-Tohoku, JB=Sobu, JA=Saikyo, JU=Ueno-Tokyo, NEX=Narita Express"
+    }
+  }
+}
