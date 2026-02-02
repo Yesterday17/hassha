@@ -16,32 +16,26 @@
 
 The `hassha` binary is fully self-contained with all assets bundled. You only need the single binary to install.
 
-### Build from source
+### Install via Cargo
 
 ```bash
-# Clone the repository
-git clone https://github.com/yesterday17/hassha.git
-cd hassha
-
-# Build in release mode
-cargo build --release
-
-# The binary is now at ./target/release/hassha
+cargo install hassha
 ```
 
 ### Install for Claude Code
 
 ```bash
-# The install command extracts all bundled assets
-./target/release/hassha install --claude-code
+hassha install --claude-code
 ```
 
-This creates the plugin at `~/.claude/plugins/hassha/` with all required files. Follow the hints printed in your terminal for further steps.
+This creates the plugin at `~/.claude/plugins/hassha/` with all required files.
+
+Then follow the steps printed in your terminal for activation.
 
 ### Install for OpenCode
 
 ```bash
-./target/release/hassha install --open-code
+hassha install --open-code
 ```
 
 This installs the TypeScript plugin to `~/.config/opencode/plugins/` and the binary to `~/.config/opencode/bin/`.
@@ -103,6 +97,24 @@ matcher = "Explore"  # Only for Explore agent
 | `Stop`               | When Claude finishes responding  | (no matcher support)                                                     |
 | `PreCompact`         | Before context compaction        | `manual`, `auto`                                                         |
 | `SessionEnd`         | When a session terminates        | `clear`, `logout`, `prompt_input_exit`, `other`                          |
+
+### OpenCode Event Mapping
+
+OpenCode uses a different event system. The hassha plugin maps OpenCode events to Claude Code equivalents:
+
+| OpenCode Event        | Claude Code Equivalent | Description                             |
+| --------------------- | ---------------------- | --------------------------------------- |
+| `session.created`     | `SessionStart`         | New session started                     |
+| `session.deleted`     | `SessionEnd`           | Session terminated                      |
+| `session.idle`        | `Stop`                 | Session finished responding             |
+| `session.error`       | `Notification`         | An error occurred                       |
+| `session.compacted`   | `PreCompact`           | Session was compacted                   |
+| `permission.asked`    | `PermissionRequest`    | Permission dialog appeared              |
+| `tool.execute.before` | `PreToolUse`           | Before a tool executes                  |
+| `tool.execute.after`  | `PostToolUse`          | After a tool succeeds                   |
+| `tool.execute.after`  | `PostToolUseFailure`   | After a tool fails (detected by output) |
+
+**Note**: OpenCode doesn't have direct equivalents for `UserPromptSubmit`, `SubagentStart`, or `SubagentStop`.
 
 ### Matcher Patterns
 
@@ -209,6 +221,38 @@ The `melody` field in config can be:
 | macOS    | Supported | `afplay`         |
 | Linux    | Planned   | `paplay`/`aplay` |
 | Windows  | Planned   | PowerShell       |
+
+## Troubleshooting
+
+### No sound plays
+
+1. Check that your system volume is not muted
+2. On macOS, ensure `afplay` is available (it's included by default)
+3. Verify the melody was downloaded: `hassha cache info`
+
+### Hook not triggering
+
+1. Ensure `.hassha/config.toml` exists in your project or a parent directory
+2. Check the hook event name is correct (case-sensitive)
+3. For `PostToolUse`, verify the `matcher` pattern matches the tool name
+4. Check melody history to see if hooks are firing: `hassha history`
+
+### Permission issues
+
+Ensure the hassha binary is executable:
+
+```bash
+# For Claude Code
+chmod +x ~/.claude/plugins/hassha/target/release/hassha
+
+# For OpenCode
+chmod +x ~/.config/opencode/bin/hassha
+```
+
+### OpenCode plugin not loading
+
+1. Check that the plugin file exists at `~/.config/opencode/plugins/hassha.ts`
+3. Restart OpenCode to reload plugins
 
 ## Credits
 
