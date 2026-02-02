@@ -35,7 +35,7 @@ cargo build --release
 ./target/release/hassha install --claude-code
 ```
 
-This creates the plugin at `~/.claude/plugins/hassha/` with all required files.
+This creates the plugin at `~/.claude/plugins/hassha/` with all required files. Follow the hints printed in your terminal for further steps.
 
 ### Install for OpenCode
 
@@ -81,13 +81,13 @@ matcher = "Bash"  # Only for Bash tool
 
 ### Supported Hook Events
 
-| Event | Description |
-|-------|-------------|
-| `Stop` | When the assistant finishes responding |
+| Event          | Description                             |
+| -------------- | --------------------------------------- |
+| `Stop`         | When the assistant finishes responding  |
 | `Notification` | When the assistant needs your attention |
-| `SessionStart` | When a session begins |
-| `SessionEnd` | When a session ends |
-| `PostToolUse` | After a tool executes successfully |
+| `SessionStart` | When a session begins                   |
+| `SessionEnd`   | When a session ends                     |
+| `PostToolUse`  | After a tool executes successfully      |
 
 ### Configuration Resolution
 
@@ -109,28 +109,28 @@ Melodies use the format `{LINE}-{Station}`:
 
 ### Supported Lines
 
-| Code | Line Name | Stations |
-|------|-----------|----------|
-| `JY` | Yamanote Line (山手線) | 30 stations |
-| `JK` | Keihin-Tohoku Line (京浜東北線) | 15 stations |
-| `JB` | Sobu Line (総武線) | 5 stations |
-| `JA` | Saikyo Line (埼京線) | 5 stations |
-| `JU` | Ueno-Tokyo Line (上野東京ライン) | 4 stations |
-| `NEX` | Narita Express (成田エクスプレス) | 4 stations |
+| Code  | Line Name                         | Stations    |
+| ----- | --------------------------------- | ----------- |
+| `JY`  | Yamanote Line (山手線)            | 30 stations |
+| `JK`  | Keihin-Tohoku Line (京浜東北線)   | 15 stations |
+| `JB`  | Sobu Line (総武線)                | 5 stations  |
+| `JA`  | Saikyo Line (埼京線)              | 5 stations  |
+| `JU`  | Ueno-Tokyo Line (上野東京ライン)  | 4 stations  |
+| `NEX` | Narita Express (成田エクスプレス) | 4 stations  |
 
 ### Sample Melodies
 
-| ID | Line | Station | Melody |
-|----|------|---------|--------|
-| `JY-Shibuya` | Yamanote | Shibuya | Hana no Horokobi |
-| `JY-Takadanobaba` | Yamanote | Takadanobaba | Astro Boy |
-| `JY-Akihabara` | Yamanote | Akihabara | Ogawa V1 |
-| `JK-Akihabara` | Keihin-Tohoku | Akihabara | Beyond the Line |
-| `JK-TakanawaGateway` | Keihin-Tohoku | Takanawa Gateway | Flower Shop |
-| `JB-Suidobashi` | Sobu | Suidobashi | Fighting Spirit A |
-| `JA-Osaki` | Saikyo | Osaki | Twinkling Skyline |
-| `JU-Shimbashi` | Ueno-Tokyo | Shimbashi | Sunlight |
-| `NEX-Shinjuku` | Narita Express | Shinjuku | Beautiful Hill |
+| ID                   | Line           | Station          | Melody            |
+| -------------------- | -------------- | ---------------- | ----------------- |
+| `JY-Shibuya`         | Yamanote       | Shibuya          | Hana no Horokobi  |
+| `JY-Takadanobaba`    | Yamanote       | Takadanobaba     | Astro Boy         |
+| `JY-Akihabara`       | Yamanote       | Akihabara        | Ogawa V1          |
+| `JK-Akihabara`       | Keihin-Tohoku  | Akihabara        | Beyond the Line   |
+| `JK-TakanawaGateway` | Keihin-Tohoku  | Takanawa Gateway | Flower Shop       |
+| `JB-Suidobashi`      | Sobu           | Suidobashi       | Fighting Spirit A |
+| `JA-Osaki`           | Saikyo         | Osaki            | Twinkling Skyline |
+| `JU-Shimbashi`       | Ueno-Tokyo     | Shimbashi        | Sunlight          |
+| `NEX-Shinjuku`       | Narita Express | Shinjuku         | Beautiful Hill    |
 
 Run `hassha list` for the complete list of 64 melodies.
 
@@ -175,11 +175,11 @@ The `melody` field in config can be:
 
 ## Platform Support
 
-| Platform | Status | Audio Backend |
-|----------|--------|---------------|
-| macOS | Supported | `afplay` |
-| Linux | Planned | `paplay`/`aplay` |
-| Windows | Planned | PowerShell |
+| Platform | Status    | Audio Backend    |
+| -------- | --------- | ---------------- |
+| macOS    | Supported | `afplay`         |
+| Linux    | Planned   | `paplay`/`aplay` |
+| Windows  | Planned   | PowerShell       |
 
 ## Credits
 

@@ -10,6 +10,7 @@ use std::path::PathBuf;
 // Bundle all assets at compile time
 const PLUGIN_JSON: &str = include_str!("../.claude-plugin/plugin.json");
 const HOOKS_JSON: &str = include_str!("../hooks/hooks.json");
+const MARKETPLACE_JSON: &str = include_str!("../.claude-plugin/marketplace.json");
 
 /// Target application for installation
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -72,6 +73,9 @@ pub fn install(target: InstallTarget) -> Result<()> {
     fs::write(claude_plugin_dir.join("plugin.json"), PLUGIN_JSON)?;
     println!("  ✓ Created .claude-plugin/plugin.json");
 
+    fs::write(claude_plugin_dir.join("marketplace.json"), MARKETPLACE_JSON)?;
+    println!("  ✓ Created .claude-plugin/marketplace.json");
+
     fs::write(hooks_dir.join("hooks.json"), HOOKS_JSON)?;
     println!("  ✓ Created hooks/hooks.json");
 
@@ -99,10 +103,9 @@ pub fn install(target: InstallTarget) -> Result<()> {
 
     match target {
         InstallTarget::ClaudeCode => {
-            println!("  1. Add the plugin to Claude Code settings.json:");
-            println!("     {{");
-            println!("       \"plugins\": [\"{}\"]", plugin_dir.display());
-            println!("     }}");
+            println!("  1. Add the marketplace and plugin to Claude Code:");
+            println!("     /plugin marketplace add {}", plugin_dir.display());
+            println!("     /plugin /plugin install hassha@hassha");
         }
         InstallTarget::OpenCode => {
             println!("  1. Add the plugin to OpenCode settings:");

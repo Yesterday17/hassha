@@ -1,0 +1,22 @@
+{
+  "name": "hassha",
+  "version": "1.0.0",
+  "description": "Local marketplace for hassha - JR East departure melodies for Claude Code",
+  "owner": {
+    "name": "Yesterday17",
+    "email": "mmf@mmf.moe"
+  },
+  "plugins": [
+    {
+      "name": "hassha",
+      "description": "Play JR East departure melodies on Claude Code hook events. Configure different melodies per project using the iconic sounds of Tokyo's train stations.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Yesterday17",
+        "email": "mmf@mmf.moe"
+      },
+      "source": "./",
+      "category": "notification"
+    }
+  ]
+}
