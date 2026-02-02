@@ -9,6 +9,7 @@
 - **64 predefined melodies**: From 6 JR East lines (Yamanote, Keihin-Tohoku, Sobu, Saikyo, Ueno-Tokyo, Narita Express)
 - **Custom audio**: Support for URLs and local file paths
 - **Smart caching**: Audio files are downloaded once and cached in `~/.hassha/audio/`
+- **History tracking**: View the last 10 played melodies with `hassha history`
 - **Easy installation**: Built-in install command for Claude Code and OpenCode
 
 ## Installation
@@ -43,7 +44,7 @@ This creates the plugin at `~/.claude/plugins/hassha/` with all required files. 
 ./target/release/hassha install --open-code
 ```
 
-This creates the plugin at `~/.opencode/plugins/hassha/`.
+This installs the TypeScript plugin to `~/.config/opencode/plugins/` and the binary to `~/.config/opencode/bin/`.
 
 ### Uninstall
 
@@ -68,26 +69,48 @@ volume = 0.8
 # Play Akihabara melody on notifications (Keihin-Tohoku Line version)
 [hooks.Notification]
 melody = "JK-Akihabara"
+matcher = "permission_prompt"  # Only for permission prompts
 
-# Play custom sound on session start
+# Play custom sound on session start (only for new sessions)
 [hooks.SessionStart]
 melody = "https://example.com/startup.mp3"
+matcher = "startup"  # Only on new sessions, not resume
 
 # Play sound after Bash commands
 [hooks.PostToolUse]
 melody = "NEX-Shinjuku"
 matcher = "Bash"  # Only for Bash tool
+
+# Play sound when subagent starts
+[hooks.SubagentStart]
+melody = "JY-Tokyo"
+matcher = "Explore"  # Only for Explore agent
 ```
 
 ### Supported Hook Events
 
-| Event          | Description                             |
-| -------------- | --------------------------------------- |
-| `Stop`         | When the assistant finishes responding  |
-| `Notification` | When the assistant needs your attention |
-| `SessionStart` | When a session begins                   |
-| `SessionEnd`   | When a session ends                     |
-| `PostToolUse`  | After a tool executes successfully      |
+| Event                | Description                      | Matcher Values                                                           |
+| -------------------- | -------------------------------- | ------------------------------------------------------------------------ |
+| `SessionStart`       | When a session begins or resumes | `startup`, `resume`, `clear`, `compact`                                  |
+| `UserPromptSubmit`   | When you submit a prompt         | (no matcher support)                                                     |
+| `PreToolUse`         | Before a tool call executes      | Tool names: `Bash`, `Edit`, `Write`, `Read`, `mcp__.*`, etc.             |
+| `PermissionRequest`  | When a permission dialog appears | Tool names                                                               |
+| `PostToolUse`        | After a tool call succeeds       | Tool names                                                               |
+| `PostToolUseFailure` | After a tool call fails          | Tool names                                                               |
+| `Notification`       | When Claude needs your attention | `permission_prompt`, `idle_prompt`, `auth_success`, `elicitation_dialog` |
+| `SubagentStart`      | When a subagent is spawned       | `Bash`, `Explore`, `Plan`, or custom agent names                         |
+| `SubagentStop`       | When a subagent finishes         | Agent names                                                              |
+| `Stop`               | When Claude finishes responding  | (no matcher support)                                                     |
+| `PreCompact`         | Before context compaction        | `manual`, `auto`                                                         |
+| `SessionEnd`         | When a session terminates        | `clear`, `logout`, `prompt_input_exit`, `other`                          |
+
+### Matcher Patterns
+
+The `matcher` field supports:
+- **Exact match**: `"Bash"` matches only `"Bash"`
+- **Alternatives**: `"Bash|Write"` matches `"Bash"` or `"Write"`
+- **Wildcard**: `"*"` matches anything
+- **Prefix match**: `"mcp__.*"` matches any MCP tool
 
 ### Configuration Resolution
 
@@ -158,6 +181,12 @@ hassha play https://example.com/sound.mp3
 
 # Play from local file
 hassha play /path/to/sound.mp3
+
+# View melody history (last 10 played)
+hassha history
+
+# Clear melody history
+hassha history clear
 
 # Cache management
 hassha cache info      # Show cache location and size

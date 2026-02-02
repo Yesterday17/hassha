@@ -1,0 +1,11 @@
+{
+  "name": "hassha-opencode-plugin",
+  "version": "0.1.0",
+  "description": "OpenCode plugin for hassha - JR East departure melodies",
+  "type": "module",
+  "devDependencies": {
+    "@opencode-ai/plugin": "latest",
+    "@types/bun": "latest",
+    "@types/node": "^25.2.0"
+  }
+}
