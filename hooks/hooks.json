@@ -1,11 +1,66 @@
 {
   "hooks": {
-    "Stop": [
+    "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/target/release/hassha hook Stop",
+            "command": "${CLAUDE_PLUGIN_ROOT}/target/release/hassha hook SessionStart",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/target/release/hassha hook UserPromptSubmit",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/target/release/hassha hook PreToolUse",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/target/release/hassha hook PermissionRequest",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/target/release/hassha hook PostToolUse",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/target/release/hassha hook PostToolUseFailure",
             "async": true
           }
         ]
@@ -22,12 +77,45 @@
         ]
       }
     ],
-    "SessionStart": [
+    "SubagentStart": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/target/release/hassha hook SessionStart",
+            "command": "${CLAUDE_PLUGIN_ROOT}/target/release/hassha hook SubagentStart",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/target/release/hassha hook SubagentStop",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/target/release/hassha hook Stop",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/target/release/hassha hook PreCompact",
             "async": true
           }
         ]
@@ -39,17 +127,6 @@
           {
             "type": "command",
             "command": "${CLAUDE_PLUGIN_ROOT}/target/release/hassha hook SessionEnd",
-            "async": true
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/target/release/hassha hook PostToolUse",
             "async": true
           }
         ]

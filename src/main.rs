@@ -6,6 +6,7 @@
 mod cache;
 mod cli;
 mod config;
+mod history;
 mod hook;
 mod install;
 mod melodies;
@@ -14,7 +15,7 @@ mod player;
 use anyhow::Result;
 use clap::Parser;
 
-use cli::{CacheCommands, Cli, Commands};
+use cli::{CacheCommands, Cli, Commands, HistoryCommands};
 
 fn main() {
     if let Err(e) = run() {
@@ -73,6 +74,22 @@ fn run() -> Result<()> {
             println!("  # or: melody = \"JK-Akihabara\"");
             println!("  # or: melody = \"NEX-Shinjuku\"");
         }
+
+        Commands::History { command } => match command {
+            Some(HistoryCommands::Clear) => {
+                let path = history::history_file_path()?;
+                if path.exists() {
+                    std::fs::remove_file(&path)?;
+                    println!("History cleared");
+                } else {
+                    println!("No history to clear");
+                }
+            }
+            None => {
+                let hist = history::load_history()?;
+                print!("{}", history::format_history(&hist));
+            }
+        },
 
         Commands::Cache { command } => match command {
             CacheCommands::Info => {

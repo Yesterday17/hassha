@@ -34,6 +34,12 @@ pub enum Commands {
     /// List available predefined melodies
     List,
 
+    /// Show recent melody history
+    History {
+        #[command(subcommand)]
+        command: Option<HistoryCommands>,
+    },
+
     /// Cache management
     Cache {
         #[command(subcommand)]
@@ -75,4 +81,10 @@ pub enum CacheCommands {
 
     /// Download all predefined melodies
     Prefetch,
+}
+
+#[derive(Subcommand)]
+pub enum HistoryCommands {
+    /// Clear melody history
+    Clear,
 }
