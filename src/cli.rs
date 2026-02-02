@@ -1,10 +1,12 @@
 //! CLI argument parsing for hassha.
 
-use clap::{Parser, Subcommand};
+use clap::{Args, Parser, Subcommand};
 
 #[derive(Parser)]
 #[command(name = "hassha")]
-#[command(about = "Audio hook effects for Claude Code - Play Yamanote Line departure melodies")]
+#[command(
+    about = "Audio hook effects for Claude Code / OpenCode - Play JR East departure melodies"
+)]
 #[command(version)]
 pub struct Cli {
     #[command(subcommand)]
@@ -13,7 +15,7 @@ pub struct Cli {
 
 #[derive(Subcommand)]
 pub enum Commands {
-    /// Handle a hook event from Claude Code (reads stdin)
+    /// Handle a hook event (reads stdin)
     Hook {
         /// The hook event name (e.g., Stop, Notification, SessionStart)
         event: String,
@@ -37,6 +39,30 @@ pub enum Commands {
         #[command(subcommand)]
         command: CacheCommands,
     },
+
+    /// Install hassha plugin for Claude Code or OpenCode
+    Install {
+        #[command(flatten)]
+        target: InstallTarget,
+    },
+
+    /// Uninstall hassha plugin
+    Uninstall {
+        #[command(flatten)]
+        target: InstallTarget,
+    },
+}
+
+#[derive(Args)]
+#[group(required = true, multiple = false)]
+pub struct InstallTarget {
+    /// Install for Claude Code
+    #[arg(long, group = "target")]
+    pub claude_code: bool,
+
+    /// Install for OpenCode
+    #[arg(long, group = "target")]
+    pub open_code: bool,
 }
 
 #[derive(Subcommand)]

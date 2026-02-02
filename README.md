@@ -1,6 +1,6 @@
 # hassha
 
-**hassha** (発車, Japanese for "departure") is a Claude Code plugin that plays audio effects at various hook events. Configure different melodies for different projects using JR East departure melodies or custom sounds.
+**hassha** (発車, Japanese for "departure") is a plugin for Claude Code and OpenCode that plays audio effects at various hook events. Configure different melodies for different projects using JR East departure melodies or custom sounds.
 
 ## Features
 
@@ -9,8 +9,11 @@
 - **64 predefined melodies**: From 6 JR East lines (Yamanote, Keihin-Tohoku, Sobu, Saikyo, Ueno-Tokyo, Narita Express)
 - **Custom audio**: Support for URLs and local file paths
 - **Smart caching**: Audio files are downloaded once and cached in `~/.hassha/audio/`
+- **Easy installation**: Built-in install command for Claude Code and OpenCode
 
 ## Installation
+
+The `hassha` binary is fully self-contained with all assets bundled. You only need the single binary to install.
 
 ### Build from source
 
@@ -22,23 +25,34 @@ cd hassha
 # Build in release mode
 cargo build --release
 
-# The binary is at ./target/release/hassha
+# The binary is now at ./target/release/hassha
 ```
 
-### Use with Claude Code
-
-Add the plugin to your Claude Code configuration:
+### Install for Claude Code
 
 ```bash
-claude --plugin-dir /path/to/hassha
+# The install command extracts all bundled assets
+./target/release/hassha install --claude-code
 ```
 
-Or add it to your settings:
+This creates the plugin at `~/.claude/plugins/hassha/` with all required files.
 
-```json
-{
-  "plugins": ["/path/to/hassha"]
-}
+### Install for OpenCode
+
+```bash
+./target/release/hassha install --open-code
+```
+
+This creates the plugin at `~/.opencode/plugins/hassha/`.
+
+### Uninstall
+
+```bash
+# Uninstall from Claude Code
+hassha uninstall --claude-code
+
+# Uninstall from OpenCode
+hassha uninstall --open-code
 ```
 
 ## Configuration
@@ -69,10 +83,10 @@ matcher = "Bash"  # Only for Bash tool
 
 | Event | Description |
 |-------|-------------|
-| `Stop` | When Claude finishes responding |
-| `Notification` | When Claude needs your attention |
-| `SessionStart` | When a Claude session begins |
-| `SessionEnd` | When a Claude session ends |
+| `Stop` | When the assistant finishes responding |
+| `Notification` | When the assistant needs your attention |
+| `SessionStart` | When a session begins |
+| `SessionEnd` | When a session ends |
 | `PostToolUse` | After a tool executes successfully |
 
 ### Configuration Resolution
@@ -123,6 +137,14 @@ Run `hassha list` for the complete list of 64 melodies.
 ## CLI Usage
 
 ```bash
+# Install the plugin
+hassha install --claude-code    # For Claude Code
+hassha install --open-code      # For OpenCode
+
+# Uninstall the plugin
+hassha uninstall --claude-code
+hassha uninstall --open-code
+
 # List all available melodies
 hassha list
 

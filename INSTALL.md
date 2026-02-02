@@ -1,8 +1,10 @@
 # hassha Plugin Installation
 
+The `hassha` binary is fully self-contained with all assets bundled. You only need the single binary to install.
+
 ## Quick Start
 
-### Option 1: Use with Claude Code directly
+### Build from source
 
 ```bash
 # Clone the repository
@@ -12,21 +14,34 @@ cd hassha
 # Build the plugin
 cargo build --release
 
-# Run Claude Code with the plugin
-claude --plugin-dir /path/to/hassha
+# The binary is at ./target/release/hassha
 ```
 
-### Option 2: Add to Claude Code settings
+### Install for Claude Code
 
-Add the plugin path to your Claude Code settings file (`~/.claude/settings.json`):
+```bash
+./target/release/hassha install --claude-code
+```
+
+This creates a complete plugin installation at `~/.claude/plugins/hassha/`.
+
+Then add the plugin to your Claude Code settings (`~/.claude/settings.json`):
 
 ```json
 {
   "plugins": [
-    "/path/to/hassha"
+    "~/.claude/plugins/hassha"
   ]
 }
 ```
+
+### Install for OpenCode
+
+```bash
+./target/release/hassha install --open-code
+```
+
+This creates a complete plugin installation at `~/.opencode/plugins/hassha/`.
 
 ## Build Requirements
 
@@ -39,15 +54,17 @@ Add the plugin path to your Claude Code settings file (`~/.claude/settings.json`
 
 ```bash
 mkdir -p .hassha
-cp /path/to/hassha/.claude-plugin/config.example.toml .hassha/config.toml
+cat > .hassha/config.toml << 'EOF'
+[hooks.Stop]
+melody = "JY-Shibuya"
+volume = 0.8
+EOF
 ```
 
-2. Edit the configuration to your preferences
-
-3. (Optional) Prefetch all melodies for offline use:
+2. (Optional) Prefetch all melodies for offline use:
 
 ```bash
-/path/to/hassha/target/release/hassha cache prefetch
+hassha cache prefetch
 ```
 
 ## Verify Installation
@@ -56,10 +73,20 @@ Test that the plugin works:
 
 ```bash
 # List available melodies
-/path/to/hassha/target/release/hassha list
+hassha list
 
 # Play a test melody
-/path/to/hassha/target/release/hassha play JY-Shibuya
+hassha play JY-Shibuya
+```
+
+## Uninstall
+
+```bash
+# Uninstall from Claude Code
+hassha uninstall --claude-code
+
+# Uninstall from OpenCode
+hassha uninstall --open-code
 ```
 
 ## Troubleshooting
@@ -81,5 +108,5 @@ Test that the plugin works:
 Ensure the hassha binary is executable:
 
 ```bash
-chmod +x /path/to/hassha/target/release/hassha
+chmod +x ~/.claude/plugins/hassha/target/release/hassha
 ```

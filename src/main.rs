@@ -1,12 +1,13 @@
-//! hassha - Audio hook effects for Claude Code
+//! hassha - Audio hook effects for Claude Code / OpenCode
 //!
-//! Play JR East departure melodies or custom sounds on various Claude Code events.
+//! Play JR East departure melodies or custom sounds on various events.
 //! Configure different melodies per project using `.hassha/config.toml`.
 
 mod cache;
 mod cli;
 mod config;
 mod hook;
+mod install;
 mod melodies;
 mod player;
 
@@ -38,7 +39,9 @@ fn run() -> Result<()> {
 
         Commands::List => {
             println!("Available melodies (JR East Lines):\n");
-            println!("Lines: JY=Yamanote, JK=Keihin-Tohoku, JB=Sobu, JA=Saikyo, JU=Ueno-Tokyo, NEX=Narita Express\n");
+            println!(
+                "Lines: JY=Yamanote, JK=Keihin-Tohoku, JB=Sobu, JA=Saikyo, JU=Ueno-Tokyo, NEX=Narita Express\n"
+            );
             println!(
                 "{:<22} {:<15} {:<18} {:<10} {}",
                 "ID", "Line", "Station", "Japanese", "Melody"
@@ -110,6 +113,24 @@ fn run() -> Result<()> {
                 println!("\nDownloaded: {}, Failed: {}", success, failed);
             }
         },
+
+        Commands::Install { target } => {
+            let install_target = if target.claude_code {
+                install::InstallTarget::ClaudeCode
+            } else {
+                install::InstallTarget::OpenCode
+            };
+            install::install(install_target)?;
+        }
+
+        Commands::Uninstall { target } => {
+            let install_target = if target.claude_code {
+                install::InstallTarget::ClaudeCode
+            } else {
+                install::InstallTarget::OpenCode
+            };
+            install::uninstall(install_target)?;
+        }
     }
 
     Ok(())
