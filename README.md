@@ -138,11 +138,9 @@ This enables:
 - **Monorepo support**: Different subdirectories can have different configs
 - **Workspace inheritance**: Put config at workspace root for all packages
 
-## Available Lines & Melodies
+## Available Melodies
 
-Melodies use the format `{LINE}-{Station}`:
-
-### Supported Lines
+hassha includes 64 predefined JR East departure melodies across 6 lines:
 
 | Code  | Line Name                         | Stations    |
 | ----- | --------------------------------- | ----------- |
@@ -153,21 +151,9 @@ Melodies use the format `{LINE}-{Station}`:
 | `JU`  | Ueno-Tokyo Line (上野東京ライン)  | 4 stations  |
 | `NEX` | Narita Express (成田エクスプレス) | 4 stations  |
 
-### Sample Melodies
+See [MELODIES.md](MELODIES.md) for the complete list of all 64 melodies with station names and melody details.
 
-| ID                   | Line           | Station          | Melody            |
-| -------------------- | -------------- | ---------------- | ----------------- |
-| `JY-Shibuya`         | Yamanote       | Shibuya          | Hana no Horokobi  |
-| `JY-Takadanobaba`    | Yamanote       | Takadanobaba     | Astro Boy         |
-| `JY-Akihabara`       | Yamanote       | Akihabara        | Ogawa V1          |
-| `JK-Akihabara`       | Keihin-Tohoku  | Akihabara        | Beyond the Line   |
-| `JK-TakanawaGateway` | Keihin-Tohoku  | Takanawa Gateway | Flower Shop       |
-| `JB-Suidobashi`      | Sobu           | Suidobashi       | Fighting Spirit A |
-| `JA-Osaki`           | Saikyo         | Osaki            | Twinkling Skyline |
-| `JU-Shimbashi`       | Ueno-Tokyo     | Shimbashi        | Sunlight          |
-| `NEX-Shinjuku`       | Narita Express | Shinjuku         | Beautiful Hill    |
-
-Run `hassha list` for the complete list of 64 melodies.
+You can also run `hassha list` to view all melodies in your terminal.
 
 ## CLI Usage
 
